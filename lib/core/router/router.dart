@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_list_poc_task/core/router/path_constants.dart';
-import 'package:todo_list_poc_task/profile_screen.dart';
-import 'package:todo_list_poc_task/todo_list_screen.dart';
+import 'package:todo_list_poc_task/feature/profile/profile_screen.dart';
+import 'package:todo_list_poc_task/feature/todo_list/presentation/view/todo_list_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorTodoListKey =
@@ -32,7 +32,7 @@ final goRouter = GoRouter(
               name: PathConstants.todos,
               path: PathConstants.todos,
               pageBuilder: (context, state) => const NoTransitionPage(
-                child: TodoListScreen(),
+                child: TodoListPage(),
               ),
             ),
           ],
