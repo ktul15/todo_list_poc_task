@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../main.dart';
 import 'models/todo.dart';
 
 class TodoRemoteDataSource {
@@ -27,13 +28,25 @@ class TodoRemoteDataSource {
   late Dio _dio;
 
   Future<List<Todo>> getTodos() async {
-    final res = await _dio.get("/");
+    int? idFromDeepLink =
+        int.tryParse(prefs?.getString("idFromDeepLink") ?? "");
+    print("idFromDeepLink: $idFromDeepLink");
+    Response<dynamic> res;
+    List<Todo> todosList;
 
-    print("res from api = ${res.data}");
+    if (idFromDeepLink == null) {
+      res = await _dio.get("/");
+      print("res from api = ${res.data}");
 
-    List<Todo> todosList = List.generate(res.data.length ?? 0, (index) {
-      return Todo.fromJson(res.data[index]);
-    });
+      todosList = List.generate(res.data.length ?? 0, (index) {
+        return Todo.fromJson(res.data[index]);
+      });
+    } else {
+      res = await _dio.get("/$idFromDeepLink");
+      prefs?.setString("idFromDeepLink", "");
+      Todo todo = Todo.fromJson(res.data);
+      todosList = [todo];
+    }
 
     return todosList;
   }

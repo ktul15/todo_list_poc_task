@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:todo_list_poc_task/core/router/path_constants.dart';
 import 'package:todo_list_poc_task/feature/add_todo/presentation/view/add_todo_page.dart';
 import 'package:todo_list_poc_task/feature/profile/profile_screen.dart';
+import 'package:todo_list_poc_task/feature/splash/presentation/splash_page.dart';
 import 'package:todo_list_poc_task/feature/todo_list/presentation/view/todo_list_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -13,7 +14,7 @@ final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'shellProfile');
 
 final goRouter = GoRouter(
-  initialLocation: PathConstants.todos,
+  initialLocation: PathConstants.splash,
   navigatorKey: _rootNavigatorKey,
   debugLogDiagnostics: true,
   routes: [
@@ -32,8 +33,11 @@ final goRouter = GoRouter(
             GoRoute(
                 name: PathConstants.todos,
                 path: PathConstants.todos,
-                pageBuilder: (context, state) => const NoTransitionPage(
-                      child: TodoListPage(),
+                pageBuilder: (context, state) => NoTransitionPage(
+                      child: TodoListPage(
+                        idFromDeepLink: int.tryParse(
+                            state.uri.queryParameters["idFromDeepLink"] ?? ""),
+                      ),
                     ),
                 routes: [
                   GoRoute(
@@ -60,6 +64,13 @@ final goRouter = GoRouter(
         ),
       ],
     ),
+    GoRoute(
+      path: PathConstants.splash,
+      name: PathConstants.splash,
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: SplashPage(),
+      ),
+    )
   ],
 );
 

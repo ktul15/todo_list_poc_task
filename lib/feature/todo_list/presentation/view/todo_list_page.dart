@@ -5,8 +5,21 @@ import 'package:todo_list_poc_task/feature/todo_list/presentation/view/todo_list
 import 'package:todo_list_poc_task/feature/todo_remote_data_source/todo_remote_data_source.dart';
 import 'package:todo_list_poc_task/feature/todo_repository/todo_repository.dart';
 
-class TodoListPage extends StatelessWidget {
-  const TodoListPage({super.key});
+class TodoListPage extends StatefulWidget {
+  const TodoListPage({super.key, this.idFromDeepLink});
+
+  final int? idFromDeepLink;
+
+  @override
+  State<TodoListPage> createState() => _TodoListPageState();
+}
+
+class _TodoListPageState extends State<TodoListPage> {
+  @override
+  void initState() {
+    super.initState();
+    print("in here");
+  }
 
   @override
   Widget build(BuildContext context) {

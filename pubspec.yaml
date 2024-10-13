@@ -51,6 +51,7 @@ dependencies:
   googleapis_auth: ^1.6.0
   flutter_local_notifications: ^17.2.3
   timezone: ^0.9.4
+  app_links: ^6.3.2
 
 dev_dependencies:
   flutter_test:

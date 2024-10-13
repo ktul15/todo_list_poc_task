@@ -17,6 +17,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
   }
 
   late TodoRepository _todoRepository;
+  int? idFromDeepLink;
 
   void _onInitial(TodoListLoaded event, Emitter emit) async {
     emit(const TodoListInProgress());
