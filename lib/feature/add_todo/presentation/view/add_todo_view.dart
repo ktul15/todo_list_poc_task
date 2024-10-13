@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_list_poc_task/feature/add_todo/presentation/bloc/add_todo_bloc.dart';
 
-import '../../../../core/router/utils/input_field_formatters.dart';
+import '../../../../core/utils/input_field_formatters.dart';
 
 class AddTodoView extends StatelessWidget {
   AddTodoView({super.key});
@@ -87,6 +87,7 @@ class AddTodoView extends StatelessWidget {
                             );
 
                             if (pickedDate != null) {
+                              print("pickedDate: ${pickedDate}");
                               dateController.text =
                                   DateFormat("MMM dd, yyy").format(pickedDate);
                               context.read<AddTodoBloc>().add(

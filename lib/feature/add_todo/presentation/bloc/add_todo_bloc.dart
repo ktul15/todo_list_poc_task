@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
 import 'package:todo_list_poc_task/feature/todo_remote_data_source/models/todo.dart';
 import 'package:todo_list_poc_task/feature/todo_repository/todo_repository.dart';
+
+import '../../../../core/firebase_api.dart';
+import '../../../../main.dart';
 
 part 'add_todo_event.dart';
 part 'add_todo_state.dart';
@@ -33,12 +36,41 @@ class AddTodoBloc extends Bloc<AddTodoEvent, AddTodoState> {
   void _onTodoFormSubmitted(AddTodoFormSubmitted event, Emitter emit) async {
     Todo todo = Todo(
       text: state.text,
-      date: DateFormat().format(state.dueDate ?? DateTime.now()),
+      date: state.dueDate,
       isCompleted: false,
       priority: state.todoPriority?.text ?? "",
     );
     final newlyAddedTodo = await _todoRepository.addTodo(todo);
-    print("new: $newlyAddedTodo");
+    print("new: ${newlyAddedTodo.date}");
+
+    /////////////////////////////////////////
+    Dio _dio = Dio();
+    final serverAccessToken = await FirebaseApi().getAccessToken();
+    final res2 = await _dio.post(
+      'https://fcm.googleapis.com/v1/projects/poc-todo-app-74fe1/messages:send',
+      data: {
+        'message': {
+          'token': prefs?.getString("fcmToken"),
+          'notification': {
+            'title': "Task due today.",
+            'body': newlyAddedTodo.text,
+          },
+          'data': {
+            'date': newlyAddedTodo.date.toString(),
+          },
+        }
+      },
+      options: Options(
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $serverAccessToken',
+        },
+      ),
+    );
+
+    print("res2 $res2");
+    /////////////////////////////////////////
+
     emit(state.copyWith(newlyAddedTodo: newlyAddedTodo));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:todo_list_poc_task/feature/todo_repository/todo_repository.dart';
 
 import '../../../todo_remote_data_source/models/todo.dart';
@@ -30,7 +29,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
       todoList.add(
         Todo(
           text: todo.text ?? "",
-          date: DateFormat("dd MMM yyyy").format(DateTime.now()),
+          date: DateTime.now(),
           isCompleted: todo.isCompleted ?? false,
           priority: todo.priority,
         ),

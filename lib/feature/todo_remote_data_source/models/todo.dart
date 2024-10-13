@@ -1,6 +1,6 @@
 class Todo {
   String? text;
-  String? date;
+  DateTime? date;
   String? priority;
   bool? isCompleted;
 
@@ -8,7 +8,7 @@ class Todo {
 
   Todo.fromJson(Map<String, dynamic> json) {
     text = json['title'];
-    date = json['date'];
+    date = DateTime.tryParse(json['date'] ?? "");
     priority = json['priority'];
     isCompleted = json['completed'];
   }
@@ -16,7 +16,7 @@ class Todo {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.text;
-    data['date'] = this.date;
+    data['date'] = this.date.toString();
     data['priority'] = this.priority;
     data['isCompleted'] = this.isCompleted;
     return data;
