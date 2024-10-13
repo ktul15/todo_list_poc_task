@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'models/todo_list_response.dart';
+import 'models/todo.dart';
 
 class TodoRemoteDataSource {
   TodoRemoteDataSource() {
@@ -26,16 +26,27 @@ class TodoRemoteDataSource {
 
   late Dio _dio;
 
-  Future<List<TodoListResponse>> getTodos() async {
+  Future<List<Todo>> getTodos() async {
     final res = await _dio.get("/");
 
     print("res from api = ${res.data}");
 
-    List<TodoListResponse> todosList =
-        List.generate(res.data.length ?? 0, (index) {
-      return TodoListResponse.fromJson(res.data[index]);
+    List<Todo> todosList = List.generate(res.data.length ?? 0, (index) {
+      return Todo.fromJson(res.data[index]);
     });
 
     return todosList;
+  }
+
+  Future<Todo> addTodo(Todo todo) async {
+    final res = await _dio.post(
+      "/",
+      data: todo.toJson(),
+    );
+
+    print("res from api = ${res.data}");
+    Todo todoRes = Todo.fromJson(res.data);
+
+    return todoRes;
   }
 }

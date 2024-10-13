@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo_list_poc_task/core/router/path_constants.dart';
 import 'package:todo_list_poc_task/feature/todo_list/presentation/bloc/todo_list_bloc.dart';
+
+import '../../../todo_remote_data_source/models/todo.dart';
 
 class TodoListView extends StatelessWidget {
   const TodoListView({super.key});
@@ -32,9 +36,9 @@ class TodoListView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final currentTodo = todoList[index];
                   return TodoItem(
-                    text: currentTodo.text,
+                    text: currentTodo.text ?? "",
                     date: currentTodo.date.toString(),
-                    isCompleted: currentTodo.isCompleted,
+                    isCompleted: currentTodo.isCompleted ?? false,
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -52,13 +56,25 @@ class TodoListView extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        decoration: BoxDecoration(
-            color: Colors.blue, borderRadius: BorderRadius.circular(32)),
-        child: const Icon(
-          Icons.add,
-          size: 32,
+      floatingActionButton: InkWell(
+        onTap: () {
+          context.pushNamed(PathConstants.addTodo).then((value) {
+            print("val: $value");
+            if (value != null) {
+              context
+                  .read<TodoListBloc>()
+                  .add(TodoListNewTodoAdded(todo: value as Todo));
+            }
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          decoration: BoxDecoration(
+              color: Colors.blue, borderRadius: BorderRadius.circular(32)),
+          child: const Icon(
+            Icons.add,
+            size: 32,
+          ),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_list_poc_task/core/router/path_constants.dart';
+import 'package:todo_list_poc_task/feature/add_todo/presentation/view/add_todo_page.dart';
 import 'package:todo_list_poc_task/feature/profile/profile_screen.dart';
 import 'package:todo_list_poc_task/feature/todo_list/presentation/view/todo_list_page.dart';
 
@@ -29,12 +30,20 @@ final goRouter = GoRouter(
           routes: [
             // top route inside branch
             GoRoute(
-              name: PathConstants.todos,
-              path: PathConstants.todos,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: TodoListPage(),
-              ),
-            ),
+                name: PathConstants.todos,
+                path: PathConstants.todos,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                      child: TodoListPage(),
+                    ),
+                routes: [
+                  GoRoute(
+                      name: PathConstants.addTodo,
+                      path: PathConstants.addTodo,
+                      pageBuilder: (context, state) => const NoTransitionPage(
+                            child: AddTodoPage(),
+                          ),
+                      routes: []),
+                ]),
           ],
         ),
         StatefulShellBranch(

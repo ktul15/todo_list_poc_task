@@ -1,5 +1,13 @@
 {
   "todoList": "Todo List",
   "profile": "Profile",
-  "todos": "Todos"
+  "todos": "Todos",
+
+  "addTodoPage_appBarTitle": "Add Todo",
+  "addTodoPage_textfield_hint": "Enter todo text",
+  "addTodoPage_textfield_empty_null_error": "Please enter todo text",
+  "addTodoPage_dueDatefield_hint": "Select due date",
+  "addTodoPage_dueDatefield_empty_null_error": "Please select a date",
+  "addTodoPage_dropdown_label": "Select Priority",
+  "addTodoPage_add_button_label": "Add Todo"
 }
