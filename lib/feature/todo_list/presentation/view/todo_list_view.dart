@@ -53,6 +53,26 @@ class TodoListView extends StatelessWidget {
                   }
                 },
               );
+            case TodoListFailure():
+              return Center(
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        context.read<TodoListBloc>().add(TodoListLoaded());
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(24),
+                        child: Icon(
+                          Icons.refresh,
+                          size: 32,
+                        ),
+                      ),
+                    ),
+                    Text(state.message),
+                  ],
+                ),
+              );
           }
         },
       ),

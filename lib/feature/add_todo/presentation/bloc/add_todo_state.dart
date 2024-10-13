@@ -6,12 +6,16 @@ class AddTodoState extends Equatable {
     this.dueDate,
     this.todoPriority,
     this.newlyAddedTodo,
+    required this.errorMessage,
+    this.isInProgress,
   });
 
   final String text;
   DateTime? dueDate;
   TodoPriority? todoPriority = TodoPriority.low;
   Todo? newlyAddedTodo;
+  String errorMessage;
+  bool? isInProgress;
 
   @override
   List<Object> get props => [
@@ -19,6 +23,8 @@ class AddTodoState extends Equatable {
         dueDate ?? DateTime.now(),
         todoPriority ?? TodoPriority.low,
         newlyAddedTodo ?? Todo(),
+        errorMessage,
+        isInProgress ?? false,
       ];
 
   AddTodoState copyWith({
@@ -26,12 +32,16 @@ class AddTodoState extends Equatable {
     DateTime? dueDate,
     TodoPriority? todoPriority,
     Todo? newlyAddedTodo,
+    String? errorMessage,
+    bool? isInProgress,
   }) {
     return AddTodoState(
       text: text ?? this.text,
       dueDate: dueDate ?? this.dueDate,
       todoPriority: todoPriority ?? this.todoPriority,
       newlyAddedTodo: newlyAddedTodo ?? this.newlyAddedTodo,
+      errorMessage: errorMessage ?? this.errorMessage,
+      isInProgress: isInProgress ?? this.isInProgress,
     );
   }
 }

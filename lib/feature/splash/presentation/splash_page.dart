@@ -4,6 +4,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_list_poc_task/core/router/path_constants.dart';
+import 'package:todo_list_poc_task/core/utils/preference_keys.dart';
 
 import '../../../main.dart';
 
@@ -29,14 +30,15 @@ class _SplashPageState extends State<SplashPage> {
       if (idFromDeepLink != null) {
         print("idFromDeepLink1: $idFromDeepLink");
 
-        prefs?.setString("idFromDeepLink", idFromDeepLink.toString());
+        prefs?.setString(
+            PreferenceKeys.idFromDeepLink, idFromDeepLink.toString());
 
         context.pushReplacementNamed(PathConstants.splash);
       }
     });
 
     Future.delayed(const Duration(seconds: 2), () async {
-      await context.pushNamed(PathConstants.todos);
+      context.pushReplacementNamed(PathConstants.todos);
     });
   }
 

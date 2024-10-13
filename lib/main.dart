@@ -20,6 +20,7 @@ void main() async {
   LocalNotification.initialize(flutterLocalNotificationsPlugin);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseApi().initNotifications();
+  await FirebaseApi().getAccessToken();
 
   final appLinks = AppLinks();
 

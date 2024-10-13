@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_list_poc_task/feature/add_todo/presentation/bloc/add_todo_bloc.dart';
@@ -24,6 +25,13 @@ class AddTodoView extends StatelessWidget {
       body: BlocConsumer<AddTodoBloc, AddTodoState>(
         listener: (context, state) {
           print("here");
+          if (state.errorMessage != "") {
+            Fluttertoast.cancel();
+            Fluttertoast.showToast(
+              msg: state.errorMessage,
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          }
           if (state.newlyAddedTodo != null) {
             context.pop(state.newlyAddedTodo);
           }
@@ -136,6 +144,11 @@ class AddTodoView extends StatelessWidget {
                           height: 16,
                         ),
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(
+                            MediaQuery.of(context).size.width * 0.5,
+                            48,
+                          )),
                           onPressed: () {
                             if (formKey.currentState?.validate() == true) {
                               // submit form
@@ -145,8 +158,10 @@ class AddTodoView extends StatelessWidget {
                                   );
                             }
                           },
-                          child: Text(
-                              appLocalizations.addTodoPage_add_button_label),
+                          child: state.isInProgress == true
+                              ? const CircularProgressIndicator()
+                              : Text(appLocalizations
+                                  .addTodoPage_add_button_label),
                         ),
                       ],
                     ),

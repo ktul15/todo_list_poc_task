@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_list_poc_task/core/router/path_constants.dart';
 import 'package:todo_list_poc_task/feature/add_todo/presentation/view/add_todo_page.dart';
-import 'package:todo_list_poc_task/feature/profile/profile_screen.dart';
+import 'package:todo_list_poc_task/feature/profile/presentation/view/profile_page.dart';
 import 'package:todo_list_poc_task/feature/splash/presentation/splash_page.dart';
 import 'package:todo_list_poc_task/feature/todo_list/presentation/view/todo_list_page.dart';
 
@@ -58,7 +58,7 @@ final goRouter = GoRouter(
               name: PathConstants.profile,
               path: PathConstants.profile,
               pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: ProfileScreen()),
+                  const NoTransitionPage(child: ProfilePage()),
             ),
           ],
         ),

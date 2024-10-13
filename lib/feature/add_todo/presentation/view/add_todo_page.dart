@@ -13,7 +13,10 @@ class AddTodoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<AddTodoBloc>(
       create: (_) => AddTodoBloc(
-        AddTodoState(text: ""),
+        AddTodoState(
+          text: "",
+          errorMessage: "",
+        ),
         todoRepository: TodoRepository(
           todoRemoteDataSource: TodoRemoteDataSource(),
         ),

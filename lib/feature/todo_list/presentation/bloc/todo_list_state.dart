@@ -29,3 +29,12 @@ class TodoListSuccess extends TodoListState {
   @override
   List<Object> get props => [todoList];
 }
+
+class TodoListFailure extends TodoListState {
+  final String message;
+
+  const TodoListFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

@@ -26,25 +26,25 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
 
     List<Todo> todoList = [];
 
-    res.forEach((todo) {
-      todoList.add(
-        Todo(
-          text: todo.text ?? "",
-          date: DateTime.now(),
-          isCompleted: todo.isCompleted ?? false,
-          priority: todo.priority,
-        ),
-      );
+    res.fold((todoListFromResponse) {
+      todoListFromResponse.forEach((todo) {
+        todoList.add(
+          Todo(
+            text: todo.text ?? "",
+            date: DateTime.now(),
+            isCompleted: todo.isCompleted ?? false,
+            priority: todo.priority,
+          ),
+        );
+      });
+
+      emit(TodoListSuccess(todoList: todoList.reversed.toList()));
+    }, (r) {
+      emit(TodoListFailure(message: r.message ?? ""));
     });
-
-    print("to: ${todoList.length}");
-
-    emit(TodoListSuccess(todoList: todoList.reversed.toList()));
   }
 
   void _onNewTodoAdded(TodoListNewTodoAdded event, Emitter emit) async {
-    // emit(const TodoListInProgress());
-
     final previousTodoList =
         (state as TodoListSuccess).todoList.reversed.toList();
     final newTodoList = [...previousTodoList, event.todo];

@@ -1,5 +1,7 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:todo_list_poc_task/feature/todo_remote_data_source/todo_remote_data_source.dart';
 
+import '../../core/utils/failure.dart';
 import '../todo_remote_data_source/models/todo.dart';
 
 class TodoRepository {
@@ -7,7 +9,7 @@ class TodoRepository {
 
   final TodoRemoteDataSource todoRemoteDataSource;
 
-  Future<List<Todo>> getTodos() async {
+  Future<Either<List<Todo>, Failure>> getTodos() async {
     final res = await todoRemoteDataSource.getTodos();
 
     print("res from repo = ${res}");
@@ -15,7 +17,7 @@ class TodoRepository {
     return res;
   }
 
-  Future<Todo> addTodo(Todo todo) async {
+  Future<Either<Todo, Failure>> addTodo(Todo todo) async {
     Todo todoRequest = Todo(
       text: todo.text,
       date: todo.date,
